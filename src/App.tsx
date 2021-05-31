@@ -16,13 +16,24 @@ function App(): JSX.Element {
     setTasks([...tasks, task]);
   };
 
-  const deleteTask = (id: string): void => {
+  const editTask = (id: string, name: string): void => {
+    const indexTask: number = tasks.findIndex((task) => task.id === id);
+
+    const editedTask = {
+      ...tasks[indexTask],
+      name,
+    };
+    tasks[indexTask] = editedTask;
+
+    setTasks([...tasks]);
+  };
+
+  const changeTaskStatus = (id: string): void => {
     const tasksAfterDelete = tasks.map((task: iTask) => {
       if (task.id === id) {
-        console.log("In");
         return {
           ...task,
-          done: true,
+          done: !task.done,
         };
       }
       return { ...task };
@@ -41,7 +52,11 @@ function App(): JSX.Element {
           <TaskForm addTask={addTask} />
         </Col>
         <Col width={6}>
-          <TaskList deleteTask={deleteTask} tasks={tasks} />
+          <TaskList
+            editTask={editTask}
+            changeTaskStatus={changeTaskStatus}
+            tasks={tasks}
+          />
         </Col>
       </Row>
     </Container>

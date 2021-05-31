@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import shortId from "shortid";
 
-import { iTask, iTaskForm } from "../types/tasks";
+import { iTask } from "../types/tasks";
 import { Form, Button, Alert } from "react-bootstrap";
+export interface iTaskFormProps {
+  addTask: (task: iTask) => void;
+}
 
-const TaskForm = ({ addTask }: iTaskForm): JSX.Element => {
+const TaskForm = ({ addTask }: iTaskFormProps): JSX.Element => {
   const [error, setError] = useState<boolean>(false);
 
   const handleSubmit = (e: any) => {
