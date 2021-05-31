@@ -2,12 +2,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Modal, Button, Form } from "react-bootstrap";
 
-import { iTask } from "../types/tasks";
+import { iTask, iTaskActions } from "../types/tasks";
 
 export interface iTaskProps {
   task: iTask;
-  changeTaskStatus: (id: string) => void;
-  editTask: (id: string, name: string) => void;
+  actions: iTaskActions;
 }
 
 interface iSpan {
@@ -26,19 +25,12 @@ const ButtonContainer = styled.div`
   text-align: center;
 `;
 
-const Task = ({
-  task,
-  changeTaskStatus,
-  editTask,
-}: iTaskProps): JSX.Element => {
+const Task = ({ task, actions }: iTaskProps): JSX.Element => {
   const { done, id, name } = task;
+  const { editTask, changeTaskStatus } = actions;
 
   const [modal, setModal] = useState<boolean>(false);
   const [taskToEdit, setTaskToEdit] = useState<string>(name);
-
-  const handleAddTask = (e: any) => {
-    editTask(id, taskToEdit);
-  };
 
   const handleChangeEdit = (e: any) => {
     setTaskToEdit(e.target.value);
@@ -65,7 +57,7 @@ const Task = ({
             onChange={handleChangeEdit}
           />
           <ButtonContainer>
-            <Button size="sm" onClick={handleAddTask}>
+            <Button size="sm" onClick={() => editTask(id, taskToEdit)}>
               Editar tarea
             </Button>
             <Button

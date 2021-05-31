@@ -42,6 +42,10 @@ function App(): JSX.Element {
     setTasks(tasksAfterDelete);
   };
 
+  const taskActions = {
+    editTask,
+    changeTaskStatus,
+  };
   return (
     <Container>
       <Row justify="center">
@@ -52,11 +56,7 @@ function App(): JSX.Element {
           <TaskForm addTask={addTask} />
         </Col>
         <Col width={6}>
-          <TaskList
-            editTask={editTask}
-            changeTaskStatus={changeTaskStatus}
-            tasks={tasks}
-          />
+          <TaskList actions={taskActions} tasks={tasks} />
         </Col>
       </Row>
     </Container>
